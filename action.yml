@@ -1,10 +1,10 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Serverless Code Provenance Attestation'
+description: 'Attests the source code on build for Serverless Applications'
+author: 'Veerash Ayyagari'
 inputs:
-  milliseconds: # change this
+  milliseconds:
     required: true
-    description: 'input description here'
+    description: 'million seconds to wait'
     default: 'default value if applicable'
 runs:
   using: 'node16'
