@@ -2,10 +2,10 @@ name: 'Serverless Code Provenance Attestation'
 description: 'Attests the source code on build for Serverless Applications'
 author: 'Veerash Ayyagari'
 inputs:
-  milliseconds:
+  publish-output-path:
     required: true
-    description: 'million seconds to wait'
-    default: 'default value if applicable'
+    description: 'build publish output path'
+    default: 'current build directory'
 runs:
   using: 'node16'
   main: 'dist/index.js'
