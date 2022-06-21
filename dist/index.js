@@ -43,7 +43,7 @@ const core = __importStar(__nccwpck_require__(186));
 const fs = __importStar(__nccwpck_require__(747));
 const path = __importStar(__nccwpck_require__(622));
 function run() {
-    var _a, _b, _c, _d, _e;
+    var _a, _b, _c, _d, _e, _f;
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const outputPath = core.getInput('publish-output-path');
@@ -52,7 +52,8 @@ function run() {
             const owner = (_b = process.env.GITHUB_REPOSITORY_OWNER) !== null && _b !== void 0 ? _b : 'Unknown';
             const actor = (_c = process.env.GITHUB_ACTOR) !== null && _c !== void 0 ? _c : 'Unknown';
             const runId = (_d = process.env.GITHUB_RUN_ID) !== null && _d !== void 0 ? _d : 'Unknown';
-            const branchName = (_e = process.env.GITHUB_REF_NAME) !== null && _e !== void 0 ? _e : 'Unknown';
+            const branchName = (_e = process.env.GITHUB_REF) !== null && _e !== void 0 ? _e : 'Unknown';
+            const commitSha = (_f = process.env.GITHUB_SHA) !== null && _f !== void 0 ? _f : 'Unknown';
             const absolutePath = path.resolve(outputPath, '.attest.json');
             const attestationObject = {
                 repo,
@@ -60,10 +61,10 @@ function run() {
                 actor,
                 runId,
                 branchName,
-                absolutePath
+                commitSha
             };
             core.debug(`Absolute Path : ${absolutePath}`);
-            core.debug(`Process.env : ${JSON.stringify(process.env)}`);
+            //core.debug(`Process.env : ${JSON.stringify(process.env)}`)
             fs.writeFile(`${absolutePath}`, JSON.stringify(attestationObject), { flag: 'a+' }, err => {
                 if (err) {
                     core.setFailed(`${err === null || err === void 0 ? void 0 : err.message}, creating file`);

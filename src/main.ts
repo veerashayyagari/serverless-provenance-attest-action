@@ -10,7 +10,8 @@ async function run(): Promise<void> {
     const owner: string = process.env.GITHUB_REPOSITORY_OWNER ?? 'Unknown'
     const actor: string = process.env.GITHUB_ACTOR ?? 'Unknown'
     const runId: string = process.env.GITHUB_RUN_ID ?? 'Unknown'
-    const branchName: string = process.env.GITHUB_REF_NAME ?? 'Unknown'
+    const branchName: string = process.env.GITHUB_REF ?? 'Unknown'
+    const commitSha: string = process.env.GITHUB_SHA ?? 'Unknown'
     const absolutePath: string = path.resolve(outputPath, '.attest.json')
 
     const attestationObject = {
@@ -19,7 +20,7 @@ async function run(): Promise<void> {
       actor,
       runId,
       branchName,
-      absolutePath
+      commitSha
     }
 
     core.debug(`Absolute Path : ${absolutePath}`)
