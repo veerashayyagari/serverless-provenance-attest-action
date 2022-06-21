@@ -43,19 +43,32 @@ const core = __importStar(__nccwpck_require__(186));
 const fs = __importStar(__nccwpck_require__(747));
 const path = __importStar(__nccwpck_require__(622));
 function run() {
-    var _a, _b;
+    var _a, _b, _c, _d, _e;
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const outputPath = core.getInput('publish-output-path');
             core.debug(`Received output path ${outputPath} ...`); // debug is only output if you set the secret `ACTIONS_STEP_DEBUG` to true
             const repo = (_a = process.env.GITHUB_REPOSITORY) !== null && _a !== void 0 ? _a : 'Unknown';
             const owner = (_b = process.env.GITHUB_REPOSITORY_OWNER) !== null && _b !== void 0 ? _b : 'Unknown';
-            const absolutePath = path.resolve(outputPath, '.attest.txt');
+            const actor = (_c = process.env.GITHUB_ACTOR) !== null && _c !== void 0 ? _c : 'Unknown';
+            const runId = (_d = process.env.GITHUB_RUN_ID) !== null && _d !== void 0 ? _d : 'Unknown';
+            const branchName = (_e = process.env.GITHUB_REF_NAME) !== null && _e !== void 0 ? _e : 'Unknown';
+            const absolutePath = path.resolve(outputPath, '.attest.json');
+            const attestationObject = {
+                repo,
+                owner,
+                actor,
+                runId,
+                branchName,
+                absolutePath
+            };
             core.debug(`Absolute Path : ${absolutePath}`);
             core.debug(`Process.env : ${JSON.stringify(process.env)}`);
-            fs.writeFile(`${absolutePath}`, `${repo}##${owner}`, { flag: 'a+' }, err => { if (err) {
-                core.setFailed(`${err === null || err === void 0 ? void 0 : err.message}, creating file`);
-            } });
+            fs.writeFile(`${absolutePath}`, JSON.stringify(attestationObject), { flag: 'a+' }, err => {
+                if (err) {
+                    core.setFailed(`${err === null || err === void 0 ? void 0 : err.message}, creating file`);
+                }
+            });
             core.debug(new Date().toTimeString());
         }
         catch (error) {
